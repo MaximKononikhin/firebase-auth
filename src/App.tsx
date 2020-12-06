@@ -1,24 +1,19 @@
 import React from 'react';
 import {Container} from 'react-bootstrap';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
-import SignUp from './Components/SignUp';
 import { AuthProvider } from './Context/AuthContext';
+import Routes from './Routes';
 
-function App() {
+const App: React.FC = () => {
   return (
     <Container
       className="d-flex align-items-center justify-content-center"
       style={{minHeight: "100vh"}}
     >
       <div className="w-100" style={{maxWidth: '400px'}}>
-        <Router>
-          <AuthProvider>
-            <Switch>
-              <Route exact path='/signup' component={SignUp}/>
-            </Switch>
-          </AuthProvider>
-        </Router>
+        <AuthProvider>
+          <Routes/>
+        </AuthProvider>
       </div>
     </Container>
   );

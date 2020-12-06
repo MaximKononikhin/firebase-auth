@@ -7,7 +7,10 @@ type IContextProps = {
 }
 
 type IAuthContext = {
-  signUp: (email: string, password: string) => Promise<firebase.auth.UserCredential>
+  signUp: (email: string, password: string) => Promise<firebase.auth.UserCredential>,
+  login: (email: string, password: string) => Promise<firebase.auth.UserCredential>,
+  logOut: () => Promise<void>,
+  currentUser: firebase.User | null
 }
 
 const AuthContext = React.createContext<Partial<IAuthContext>>({});
@@ -24,6 +27,14 @@ export const AuthProvider: React.FC<IContextProps> = ({ children }) => {
     return auth.createUserWithEmailAndPassword(email, password)
   }
 
+  const login = (email: string, password: string) => {
+    return auth.signInWithEmailAndPassword(email, password)
+  }
+
+  const logOut = () => {
+    return auth.signOut();
+  }
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user: firebase.User | null) => {
       setCurrentUser(user)
@@ -35,7 +46,9 @@ export const AuthProvider: React.FC<IContextProps> = ({ children }) => {
 
   const value = {
     currentUser,
-    signUp
+    signUp,
+    login,
+    logOut
   };
 
   return (
