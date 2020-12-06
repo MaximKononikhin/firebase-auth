@@ -9,7 +9,7 @@ type RouteType = {
 }
 
 
-const PrivateRoute = ({ component: RouteComponent, ...rest }: RouteType) => {
+const PrivateRoute: React.FC<RouteType> = ({ component: RouteComponent, ...rest }) => {
 
   const { currentUser } = useAuth();
 
